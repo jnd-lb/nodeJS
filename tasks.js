@@ -29,14 +29,15 @@ function startApp(name){
  * ```
  * 
  * The text received would be "batata"
- * This function  then directs to other functions
+ * This function  then directs to other function
  * 
  * @param  {string} text data typed by the user
  * @returns {void}
  */
 function onDataReceived(text) {
-  if (text === 'quit\n' || text === 'exit\n') {
+  if (text === 'quit\n' || text === 'exit\n' ) {
     quit();
+
   }
   else if(text === 'hello\n'){
     hello();
