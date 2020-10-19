@@ -40,13 +40,17 @@ function startApp(name){
  * @returns {void}
  */
 function onDataReceived(text) {
+  //textTrim = text.trim();
+
   if (text === 'quit\n' || text === 'exit\n' ) {
     quit();
-
   }
   else if(text === 'hello\n'){
     hello();
-  }else if(text === 'help\n'){
+  }else if(text.trim().toLocaleLowerCase().startsWith("hello")){
+    helloParam(text);
+  }
+  else if(text === 'help\n'){
     help();
   }
   else{
@@ -54,11 +58,9 @@ function onDataReceived(text) {
   }
 }
 
-
 /**
  * prints "unknown command"
  * This function is supposed to run when all other commands have failed
- *
  * @param  {string} c the text received
  * @returns {void}
  */
@@ -86,6 +88,16 @@ function help(){
  */
 function hello(){
   console.log('hello!')
+}
+
+/**
+ * Says hello
+ * 
+ *@param {string} text the text received 
+ * @returns {void}
+ */
+function helloParam(txt){
+  console.log(txt)
 }
 
 
