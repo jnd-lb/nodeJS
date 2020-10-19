@@ -97,6 +97,9 @@ function hello(){
  * @returns {void}
  */
 function helloParam(txt){
+  txt = txt.trim();
+  if(txt.toLocaleLowerCase()=="hello world") txt=txt+"!"; 
+  if(txt==="hello !") txt=txt.replace(" ",""); 
   console.log(txt)
 }
 
