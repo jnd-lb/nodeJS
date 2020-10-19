@@ -9,6 +9,7 @@
  * @param  {string} name the name of the app
  * @returns {void}
  */
+
 function startApp(name){
   process.stdin.resume();
   process.stdin.setEncoding('utf8');
@@ -34,7 +35,7 @@ function startApp(name){
  * @returns {void}
  */
 function onDataReceived(text) {
-  if (text === 'quit\n') {
+  if (text === 'quit\n' || text === 'exit\n') {
     quit();
   }
   else if(text === 'hello\n'){
@@ -79,4 +80,4 @@ function quit(){
 }
 
 // The following line starts the application
-startApp("Jad Sarout")
+startApp("Jihad Noureddine")
