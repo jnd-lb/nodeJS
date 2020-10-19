@@ -47,7 +47,7 @@ function onDataReceived(text) {
   else if(text === 'hello\n'){
     hello();
   }else if(text === 'help\n'){
-    listCommands();
+    help();
   }
   else{
     unknownCommand(text);
@@ -66,9 +66,11 @@ function unknownCommand(c){
   console.log('unknown command: "'+c.trim()+'"')
 }
 
-
-function listCommands(){
-
+/**
+ * list all the available to use commands
+ * @returns {void}
+ */
+function help(){
   console.log("\n\n***************************************************************");
   console.log("* You can interact with the app using the following commands: *");
   console.log("***************************************************************");
