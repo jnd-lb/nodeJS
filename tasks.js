@@ -45,10 +45,8 @@ function onDataReceived(text) {
   if (text === 'quit\n' || text === 'exit\n' ) {
     quit();
   }
-  else if(text === 'hello\n'){
-    hello();
-  }else if(text.trim().toLocaleLowerCase().startsWith("hello")){
-    helloParam(text);
+  else if(text.trim().startsWith('hello')){
+    hello(text);
   }
   else if(text === 'help\n'){
     help();
@@ -84,22 +82,15 @@ function help(){
 /**
  * Says hello
  *
+ * @param {string} txt text added by user
+ * unless the user enter hello ! or hello, it returns any thing entered by the user begins with hello. In case of "hello" or "hello !" the app returns "hello!".
  * @returns {void}
  */
-function hello(){
-  console.log('hello!')
-}
-
-/**
- * Says hello
- * 
- *@param {string} text the text received 
- * @returns {void}
- */
-function helloParam(txt){
+function hello(txt){
   txt = txt.trim();
   if(txt.toLocaleLowerCase()=="hello world") txt=txt+"!"; 
   if(txt==="hello !") txt=txt.replace(" ",""); 
+  if(txt==="hello") txt=txt+"!"; 
   console.log(txt)
 }
 
