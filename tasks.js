@@ -10,7 +10,12 @@
  * @returns {void}
  */
 
+
+ const commandList = ['help','quit','exit'];
+
 function startApp(name){
+
+
   process.stdin.resume();
   process.stdin.setEncoding('utf8');
   process.stdin.on('data', onDataReceived);
@@ -41,6 +46,8 @@ function onDataReceived(text) {
   }
   else if(text === 'hello\n'){
     hello();
+  }else if(text === 'help\n'){
+    listCommands();
   }
   else{
     unknownCommand(text);
@@ -59,6 +66,16 @@ function unknownCommand(c){
   console.log('unknown command: "'+c.trim()+'"')
 }
 
+
+function listCommands(){
+
+  console.log("\n\n***************************************************************");
+  console.log("* You can interact with the app using the following commands: *");
+  console.log("***************************************************************");
+  commandList.forEach(element=> {
+    console.log(`- ${element}`);
+  });
+}
 
 /**
  * Says hello
