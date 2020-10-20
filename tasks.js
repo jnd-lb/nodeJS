@@ -102,7 +102,6 @@ function list(){
  */
 
  function remove(command){
-  
     //handle empty list
     if(tasksList.length==0) {
       console.log('\x1b[33m%s\x1b[0m',"the there is no task to be removed");
