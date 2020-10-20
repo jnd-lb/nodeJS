@@ -69,6 +69,7 @@ function onDataReceived(text) {
  * add the a new task object to the tasksList
  * @param {string} text
  * @returns {void} 
+ * 
  */
 function add(text){
   if(text.trim()=="add") {
