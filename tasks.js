@@ -1,4 +1,7 @@
 
+//import Task from "./task.js";
+const Task = require('./task.js');
+
 /**
  * Starts the application
  * This is the function that is run when the app starts
@@ -12,6 +15,7 @@
 
 
  const commandList = ['help','quit','exit'];
+ const tasksList =[];
 
 function startApp(name){
 
@@ -47,6 +51,10 @@ function onDataReceived(text) {
   }
   else if(text.trim().startsWith('hello')){
     hello(text);
+  }else if(text.startsWith("add")){
+    add(text);
+  }else if(text ==  "list\n"){
+    list();
   }
   else if(text === 'help\n'){
     help();
@@ -55,6 +63,34 @@ function onDataReceived(text) {
     unknownCommand(text);
   }
 }
+
+/**
+ * 
+ * add the a new task object to the tasksList
+ * @param {string} text
+ * @returns {void} 
+ */
+function add(text){
+  if(text.trim()=="add") {
+    console.log('\x1b[33m%s\x1b[0m',"the app expect a argument after 'add'");
+    return;
+  } 
+  let task = new Task(text.trim().replace("add ",""));
+  tasksList.push(task)
+  console.log("\x1b[32m","task inserted properly",'\x1b[0m');
+}
+
+/**
+ * list all the element in a list
+ * @returns {void} 
+ */
+function list(){
+  tasksList.forEach(element => {
+    console.log((element.checked)?"[✓] ":"[ ] ",element.taskContent);
+
+  });
+}
+
 
 /**
  * prints "unknown command"
@@ -94,7 +130,6 @@ function hello(txt){
   console.log(txt)
 }
 
-
 /**
  * Exits the application
  *
@@ -104,6 +139,7 @@ function quit(){
   console.log('Quitting now, goodbye!')
   process.exit();
 }
+
 
 // The following line starts the application
 startApp("Jihad Noureddine")
