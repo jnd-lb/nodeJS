@@ -14,8 +14,8 @@ const Task = require('./task.js');
  */
 
 
- const commandList = ['help','quit','exit'];
- let tasksList =[];
+ const commandList = ['help','quit','exit',"add","remove","list"];
+ let tasksList = [];
 
 function startApp(name){
 
