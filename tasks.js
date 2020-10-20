@@ -15,7 +15,7 @@ const Task = require('./task.js');
 
 
  const commandList = ['help','quit','exit'];
- const tasksList =[];
+ let tasksList =[];
 
 function startApp(name){
 
@@ -55,6 +55,8 @@ function onDataReceived(text) {
     add(text);
   }else if(text ==  "list\n"){
     list();
+  }else if(text.trim().startsWith("remove")){
+    remove(text.trim());
   }
   else if(text === 'help\n'){
     help();
@@ -76,7 +78,7 @@ function add(text){
     console.log('\x1b[33m%s\x1b[0m',"the app expect a argument after 'add'");
     return;
   } 
-  let task = new Task(text.trim().replace("add ",""));
+  let task = new Task(text.trim().replace("add ","").trim());
   tasksList.push(task)
   console.log("\x1b[32m","task inserted properly",'\x1b[0m');
 }
@@ -88,10 +90,55 @@ function add(text){
 function list(){
   tasksList.forEach(element => {
     console.log((element.checked)?"[✓] ":"[ ] ",element.taskContent);
-
   });
 }
 
+
+/**
+ * remove (without anything) should remove the last task
+ * remove + index should remove the task at this index
+ * @param {string} command 
+ * @returns {void} 
+ */
+
+ function remove(command){
+  
+    //handle empty list
+    if(tasksList.length==0) {
+      console.log('\x1b[33m%s\x1b[0m',"the there is no task to be removed");
+      return;
+     }
+
+  
+  if(command == "remove") {
+     tasksList.pop();
+     console.log("\x1b[32m","task has been removed successfully",'\x1b[0m');
+     return;
+    }
+
+  let tmp = command.split(" ");
+  let index = tmp[1];
+
+    //handle non- digit param
+  if(index.match(/^[0-9]+/g) == null) {
+    console.log('\x1b[33m%s\x1b[0m',"the app expect a number after 'remove'");
+    return;
+  }
+
+   // handle out boundery errors
+   if(index<=0 || index > tasksList.length){
+     console.log('\x1b[33m%s\x1b[0m',`You only allowed to enter a number between 1 and ${tasksList.length}`);
+     return;
+   }
+    
+  //parsing it to 0 based indexing 
+   index = parseInt(index) - 1;
+  
+  tasksList= [...tasksList.slice(0,index),
+            ...tasksList.slice(index+1,tasksList.length)];
+
+  console.log("\x1b[32m","task has been removed successfully",'\x1b[0m');
+ }
 
 /**
  * prints "unknown command"
