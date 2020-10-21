@@ -14,7 +14,7 @@ const Task = require('./task.js');
  */
 
 
- const commandList = ['help','quit','exit',"add","remove","list"];
+ const commandList = ['help','quit','exit',"add","remove","list","check","uncheck"];
  let tasksList = [];
 
 function startApp(name){
@@ -264,6 +264,12 @@ function quit(){
   }
 
 
+
+  /**
+   * helps mark any tadk ad not done
+   * @param {string} command
+   * @returns {void} 
+   */
   function uncheck(command){
     if(command == "uncheck"){
       console.log('\x1b[33m%s\x1b[0m',"the app expect an argument after uncheck");
