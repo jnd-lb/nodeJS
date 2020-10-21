@@ -19,12 +19,13 @@ const Task = require('./task.js');
 
 function startApp(name){
 
-
   process.stdin.resume();
   process.stdin.setEncoding('utf8');
   process.stdin.on('data', onDataReceived);
-  console.log(`Welcome to ${name}'s application!`)
-  console.log("--------------------")
+  console.log("\n");
+  console.log("------------------------------------------------");
+  console.log(`   Welcome to ${name}'s application!`);
+  console.log("------------------------------------------------");
 }
 
 
@@ -60,6 +61,8 @@ function onDataReceived(text) {
   }
   else if(text === 'help\n'){
     help();
+  }else if(text.trim().startsWith("edit")){
+    edit(text.trim());
   }
   else{
     unknownCommand(text);
@@ -187,6 +190,39 @@ function quit(){
   process.exit();
 }
 
+/**
+ * edit an existing task
+ * @param {string} command
+ * @returns {void}
+ */
+
+ function edit(command){
+   if(command == "edit"){
+    console.log('\x1b[33m%s\x1b[0m',"the app expect an argument after edit");
+    return;
+   }
+
+   // handling wrong command format
+   if(!command.match(/^edit [0-9]{1,2} new [A-Z a-z 0-9]{1,}/)){
+    console.log('\x1b[33m%s\x1b[0m',"Please enter the commad following this format");
+    console.log("edit {the task number} new {the new content}");
+    return;
+  }
+
+  let temp = command.split(" ");
+  let index = parseInt(temp[1]);
+  
+    // handle out boundery errors
+    if(index<=0 || index > tasksList.length){
+      console.log('\x1b[33m%s\x1b[0m',`You only allowed to enter a number between 1 and ${tasksList.length} after 'edit'`);
+      return;
+    }
+
+  tasksList[index-1].taskContent = command.replace(/^edit [0-9]{1,2} /,"");
+
+  //success message
+  console.log("\x1b[32m","task has been edited successfully",'\x1b[0m');
+ }
 
 // The following line starts the application
-startApp("Jihad Noureddine")
+startApp("Jihad Noureddine");
