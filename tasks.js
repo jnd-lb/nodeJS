@@ -65,6 +65,8 @@ function onDataReceived(text) {
     edit(text.trim());
   }else if(text.trim().startsWith("check")){
     check(text.trim());
+  }else if(text.trim().startsWith("uncheck")){
+    uncheck(text.trim());
   }
   else{
     unknownCommand(text);
@@ -259,6 +261,33 @@ function quit(){
 
   //success message
   console.log("\x1b[32m","task has been checked as done successfully",'\x1b[0m');
+  }
+
+
+  function uncheck(command){
+    if(command == "uncheck"){
+      console.log('\x1b[33m%s\x1b[0m',"the app expect an argument after uncheck");
+      return;
+     }
+
+     // handling wrong command format
+   if(!command.match(/^uncheck [0-9]{1,2}/)){
+    console.log('\x1b[33m%s\x1b[0m',"Please use digits only after check");
+    return;
+  }
+
+  let temp = command.split(" ");
+  let index = parseInt(temp[1]);
+  
+    // handle out boundery errors
+    if(index<=0 || index > tasksList.length){
+      console.log('\x1b[33m%s\x1b[0m',`You only allowed to enter a number between 1 and ${tasksList.length} after 'uncheck'`);
+      return;
+    }
+  tasksList[index-1].checked = false;
+
+  //success message
+  console.log("\x1b[32m","task has been marked as not done successfully",'\x1b[0m');
   }
 
 // The following line starts the application
