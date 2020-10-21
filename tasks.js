@@ -2,6 +2,7 @@
 //import Task from "./task.js";
 const Task = require('./task.js');
 const fs = require('fs');
+let pathToDB = "database.json";
 /**
  * Starts the application
  * This is the function that is run when the app starts
@@ -18,9 +19,18 @@ const fs = require('fs');
  let tasksList = [];
 
 function startApp(name){
+  let arg = process.argv[2];
 
-  const data = fs.readFileSync('database.json');
+// Read database JSON file and handle not existed file  
+try{
+  const data = fs.readFileSync((arg)?arg:pathToDB);
   tasksList = JSON.parse(data);
+}catch(e){
+  console.log("There is an error please make sure that the json file you specified does exist or you have not deleted database.json by mistake");
+  console.log("Exiting...");
+  process.exit();
+}
+
   process.stdin.resume();
   process.stdin.setEncoding('utf8');
   process.stdin.on('data', onDataReceived);
