@@ -1,7 +1,7 @@
 
 //import Task from "./task.js";
 const Task = require('./task.js');
-
+const fs = require('fs');
 /**
  * Starts the application
  * This is the function that is run when the app starts
@@ -19,6 +19,8 @@ const Task = require('./task.js');
 
 function startApp(name){
 
+  const data = fs.readFileSync('database.json');
+  tasksList = JSON.parse(data);
   process.stdin.resume();
   process.stdin.setEncoding('utf8');
   process.stdin.on('data', onDataReceived);
@@ -190,6 +192,16 @@ function hello(txt){
  * @returns {void}
  */
 function quit(){
+  console.log("Saving changes....");
+  try {
+ //   const data = fs.readFileSync('database.json');
+    let data = JSON.stringify(tasksList);
+    fs.writeFileSync('database.json', data);
+  } catch (err) {
+    console.error(err);
+  }
+
+
   console.log('Quitting now, goodbye!')
   process.exit();
 }
