@@ -63,6 +63,8 @@ function onDataReceived(text) {
     help();
   }else if(text.trim().startsWith("edit")){
     edit(text.trim());
+  }else if(text.trim().startsWith("check")){
+    check(text.trim());
   }
   else{
     unknownCommand(text);
@@ -224,5 +226,43 @@ function quit(){
   console.log("\x1b[32m","task has been edited successfully",'\x1b[0m');
  }
 
+
+
+ /**
+  * helps check tasks as done
+  * 
+  * @param{string} command
+  * @returns{void} 
+  */
+
+  function check(command){
+    if(command == "check"){
+      console.log('\x1b[33m%s\x1b[0m',"the app expect an argument after check");
+      return;
+     }
+
+     // handling wrong command format
+   if(!command.match(/^check [0-9]{1,2}/)){
+    console.log('\x1b[33m%s\x1b[0m',"Please use digits only after check");
+    return;
+  }
+
+  let temp = command.split(" ");
+  let index = parseInt(temp[1]);
+  
+    // handle out boundery errors
+    if(index<=0 || index > tasksList.length){
+      console.log('\x1b[33m%s\x1b[0m',`You only allowed to enter a number between 1 and ${tasksList.length} after 'check'`);
+      return;
+    }
+  tasksList[index-1].checked = true;
+
+  //success message
+  console.log("\x1b[32m","task has been checked as done successfully",'\x1b[0m');
+  }
+
 // The following line starts the application
 startApp("Jihad Noureddine");
+
+
+
